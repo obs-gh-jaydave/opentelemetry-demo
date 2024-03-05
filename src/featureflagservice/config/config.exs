@@ -39,6 +39,27 @@ config :logger, :console,
 config :logger,
   level: :debug
 
+# Configure Quantum scheduler for Featureflagservice
+config :featureflagservice, Featureflagservice.Scheduler,
+  jobs: [
+    # Every 1 hour, set the feature flag to 1.0 for cartServiceFailure
+    {"0 */1 * * *", {Featureflagservice.FeatureFlags, :toggle_feature_flag, ["cartServiceFailure", 1.0]}},
+    # Every 30 minutes, set the feature flag to 0.0 for cartServiceFailure
+    {"*/30 * * * *", {Featureflagservice.FeatureFlags, :toggle_feature_flag, ["cartServiceFailure", 0.0]}},
+    # Every 1 hour, set the feature flag to 1.0 for productCatalogFailure
+    {"0 */1 * * *", {Featureflagservice.FeatureFlags, :toggle_feature_flag, ["productCatalogFailure", 1.0]}},
+    # Every 30 minutes, set the feature flag to 0.0 for productCatalogFailure
+    {"*/30 * * * *", {Featureflagservice.FeatureFlags, :toggle_feature_flag, ["productCatalogFailure", 0.0]}},
+    # Every 1 hour, set the feature flag to 1.0 for recommendationCache
+    {"0 */1 * * *", {Featureflagservice.FeatureFlags, :toggle_feature_flag, ["recommendationCache", 1.0]}},
+    # Every 30 minutes, set the feature flag to 0.0 for recommendationCache
+    {"*/30 * * * *", {Featureflagservice.FeatureFlags, :toggle_feature_flag, ["recommendationCache", 0.0]}},
+    # Every 1 hour, set the feature flag to 1.0 for adServiceFailure
+    {"0 */1 * * *", {Featureflagservice.FeatureFlags, :toggle_feature_flag, ["adServiceFailure", 1.0]}},
+    # Every 30 minutes, set the feature flag to 0.0 for adServiceFailure
+    {"*/30 * * * *", {Featureflagservice.FeatureFlags, :toggle_feature_flag, ["adServiceFailure", 0.0]}}
+  ]
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
