@@ -64,7 +64,8 @@ defmodule Featureflagservice.MixProject do
       {:opentelemetry_api, "~> 1.2.1"},
       {:opentelemetry, "~> 1.3.0"},
       {:opentelemetry_phoenix, "~> 1.1.1"},
-      {:opentelemetry_ecto, "~> 1.1.1"}
+      {:opentelemetry_ecto, "~> 1.1.1"},
+      {:quantum, "~> 3.5.3"}
     ]
   end
 

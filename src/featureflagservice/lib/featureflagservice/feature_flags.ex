@@ -130,4 +130,29 @@ defmodule Featureflagservice.FeatureFlags do
   def change_feature_flag(%FeatureFlag{} = feature_flag, attrs \\ %{}) do
     FeatureFlag.changeset(feature_flag, attrs)
   end
+
+  # Public function to toggle the feature flag
+  def toggle_feature_flag(name, value) do
+    feature_flag = get_feature_flag_by_name(name)
+
+    case feature_flag do
+      nil ->
+        {:error, :not_found}
+      %FeatureFlag{} ->
+        update_feature_flag(feature_flag, %{enabled: value})
+    end
+  end
+
+  # Private function to toggle the feature flag
+  defp toggle_feature_flag(name) do
+    feature_flag = get_feature_flag_by_name(name)
+
+    new_value = case feature_flag.enabled do
+      0.0 -> 1.0
+      1.0 -> 0.0
+      _ -> feature_flag.enabled
+    end
+
+    update_feature_flag(feature_flag, %{enabled: new_value})
+  end
 end
